@@ -5,11 +5,21 @@ from selenium.webdriver.common.by import By
 #from selenium.webdriver.support import expected_conditions as EC
 import time
 import datetime
+import maskpass
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 # ENTER YOUR CREDENTIALS
 uid = ""
 password = ""
 
+if uid == "":
+    uid = str(input("Enter Uid: "))
+if password == "":
+    password = maskpass.askpass("Enter password: ")
+
+# do something to reduce log info displayed in terminal
 
 driver = webdriver.Edge()
 
@@ -34,12 +44,36 @@ time.sleep(2)
 
 # check for todays date in the sheet
 todays_date = datetime.date.today().strftime('%d-%b-%Y')
+
+# initialize smtp object
+smtp_object = smtplib.SMTP('smtp-relay.brevo.com', 587)
+smtp_object.ehlo()  # this line should always come after the line above
+smtp_object.starttls()
+from_address = "notalan.notification@gmail.com"
+to_address = "u{}@rajagiri.edu.in".format(uid[1:])
+smtp_object.login(from_address, "Lyj8RhM6TxkO3HDB")
+msg = MIMEMultipart()
+msg['From'] = from_address
+msg['To'] = to_address
+#smtp_object.sendmail(from_address, to_address, email_body)
+
 try:
     td_element = driver.find_element(By.XPATH, "//td[text()=todays_date]")
     # iff no error, then the below code executes
-    # sendemail()
-    print("\n U R marked absent on {}\n".format(todays_date))
+#    print("\n U R marked absent on {}\n".format(todays_date))
+    msg['Subject'] = "ABSENT on {}".format(todays_date)
+    body = 'Hi student,\nyou were marked absent on {}.\nMake sure to contact your professor if this was a mistake.\n\nIf you recieved this email already, please ignore.'
 except:
-    print("\n U R PRESENT\n")
+#    print("\n U R PRESENT\n")
+    msg['Subject'] = "PRESENT on {}".format(todays_date)
+    body = 'Hi student please ignore.'
 
-time.sleep(5)
+finally:
+    msg.attach(MIMEText(body, 'plain'))
+    text = msg.as_string()
+    smtp_object.sendmail(from_address, to_address, text)
+    smtp_object.quit()
+
+#print("last line")    
+
+time.sleep(2)
