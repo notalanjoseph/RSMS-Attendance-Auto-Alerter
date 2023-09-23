@@ -11,8 +11,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 # ENTER YOUR CREDENTIALS
-uid = ""
-password = ""
+uid = "U2103021"
+password = "210555"
 
 if uid == "":
     uid = str(input("Enter Uid: "))
@@ -66,7 +66,7 @@ try:
 except:
 #    print("\n U R PRESENT\n")
     msg['Subject'] = "PRESENT on {}".format(todays_date)
-    body = 'Hi student please ignore.'
+    body = 'Hi student please ignore.\n\nYou were marked present or professor didnt update rsms'
 
 finally:
     msg.attach(MIMEText(body, 'plain'))
