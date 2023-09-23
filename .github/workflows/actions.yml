@@ -2,7 +2,7 @@ name: Schedule Python script
 
 on:
   schedule:
-    - cron: '10 21 * * *'
+    - cron: '30 18 * * 3,4,5' #18:30 on Wed, Thu, and Fri.
   workflow_dispatch: #for manual button on gh
 
 jobs:
