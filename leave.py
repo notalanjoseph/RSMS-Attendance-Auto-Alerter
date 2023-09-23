@@ -43,10 +43,10 @@ submit_button.click()
 time.sleep(2)
 
 # check for last 3 days date in the sheet
-todays_date = datetime.date.today().strftime('%d-%b-%Y')
+today = datetime.date.today().strftime('%d-%b-%Y')
 yesterday = (datetime.date.today() - datetime.timedelta(days=1)).strftime('%d-%b-%Y')
 ereyesterday = (datetime.date.today() - datetime.timedelta(days=2)).strftime('%d-%b-%Y')
-days = [ereyesterday, yesterday, todays_date]
+days = [ereyesterday, yesterday, today]
 
 # initialize smtp object
 smtp_object = smtplib.SMTP('smtp-relay.brevo.com', 587)
@@ -70,7 +70,6 @@ for day in days:
         msg['Subject'] = "PRESENT on {}".format(day)
         body = '\n\nYou were marked present on {} in RSMS\nOR\nyour professor did not update RSMS yet.'.format(day)
 
-    #finally:
     body = body + "\n\n\n\n\nThis is an automated email. Please contact in case of any errors."
     msg.attach(MIMEText(body, 'plain'))
     text = msg.as_string()
