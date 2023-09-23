@@ -42,8 +42,11 @@ submit_button = driver.find_element(By.CLASS_NAME, "ibox1")
 submit_button.click()
 time.sleep(2)
 
-# check for todays date in the sheet
+# check for last 3 days date in the sheet
 todays_date = datetime.date.today().strftime('%d-%b-%Y')
+yesterday = (datetime.date.today() - datetime.timedelta(days=1)).strftime('%d-%b-%Y')
+ereyesterday = (datetime.date.today() - datetime.timedelta(days=2)).strftime('%d-%b-%Y')
+days = [ereyesterday, yesterday, todays_date]
 
 # initialize smtp object
 smtp_object = smtplib.SMTP('smtp-relay.brevo.com', 587)
@@ -55,25 +58,26 @@ smtp_object.login(from_address, "Lyj8RhM6TxkO3HDB")
 msg = MIMEMultipart()
 msg['From'] = from_address
 msg['To'] = to_address
-#smtp_object.sendmail(from_address, to_address, email_body)
 
-try:
-    td_element = driver.find_element(By.XPATH, "//td[text()=todays_date]")
-    # iff no error, then the below code executes
-#    print("\n U R marked absent on {}\n".format(todays_date))
-    msg['Subject'] = "ABSENT on {}".format(todays_date)
-    body = 'Hi student,\nyou were marked absent on {}.\nMake sure to contact your professor if this was a mistake.\n\nIf you recieved this email already, please ignore.'
-except:
-#    print("\n U R PRESENT\n")
-    msg['Subject'] = "PRESENT on {}".format(todays_date)
-    body = 'Hi student please ignore.\n\nYou were marked present or professor didnt update rsms'
+for day in days:
+    try:
+        td_element = driver.find_element(By.XPATH, "//td[text()=day]")
+        # iff no error, then the below code executes
+        msg['Subject'] = "ABSENT on {}".format(day)
+        body = 'Hi student,\nyou were marked absent on {}.\nContact your professor if this was a mistake.\n\nIf you recieved this email already, please ignore.'.format(day)
 
-finally:
+    except:
+        msg['Subject'] = "PRESENT on {}".format(day)
+        body = '\n\nYou were marked present on {} in RSMS\nOR\nyour professor did not update RSMS yet.'.format(day)
+
+    #finally:
+    body = body + "\n\n\n\n\nThis is an automated email. Please contact in case of any errors."
     msg.attach(MIMEText(body, 'plain'))
     text = msg.as_string()
     smtp_object.sendmail(from_address, to_address, text)
-    smtp_object.quit()
+    del msg['Subject']
+    del msg.get_payload()[0]
 
-#print("last line")    
-
+smtp_object.quit()
+driver.quit()
 time.sleep(2)

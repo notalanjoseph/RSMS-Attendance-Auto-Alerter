@@ -6,7 +6,6 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 import time
 import datetime
-import maskpass
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -30,11 +29,6 @@ driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 uid = "U2103021"
 password = "210555"
 
-if uid == "":
-    uid = str(input("Enter Uid: "))
-if password == "":
-    password = maskpass.askpass("Enter password: ")
-
 driver.get('https://www.rajagiritech.ac.in/stud/ktu/student/')
 time.sleep(2)
 driver.find_element("name", "Userid").send_keys(uid)
@@ -51,6 +45,9 @@ submit_button.click()
 time.sleep(2)
 
 todays_date = datetime.date.today().strftime('%d-%b-%Y')
+yesterday = (datetime.date.today() - datetime.timedelta(days=1)).strftime('%d-%b-%Y')
+ereyesterday = (datetime.date.today() - datetime.timedelta(days=2)).strftime('%d-%b-%Y')
+days = [ereyesterday, yesterday, todays_date]
 
 smtp_object = smtplib.SMTP('smtp-relay.brevo.com', 587)
 smtp_object.ehlo()  # this line should always come after the line above
@@ -76,4 +73,5 @@ finally:
     smtp_object.sendmail(from_address, to_address, text)
     smtp_object.quit()
 
+driver.quit()
 time.sleep(2)
