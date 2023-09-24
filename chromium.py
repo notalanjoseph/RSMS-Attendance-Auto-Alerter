@@ -9,6 +9,7 @@ import datetime
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import os
 
 chrome_service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
 chrome_options = Options()
@@ -26,8 +27,8 @@ for option in options:
 driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 
 # ENTER YOUR CREDENTIALS
-uid = "U2103021"
-password = "210555"
+uid = os.getenv("YOUR_UID")
+password = os.getenv("RSMS_PASSWORD")
 
 driver.get('https://www.rajagiritech.ac.in/stud/ktu/student/')
 time.sleep(2)
