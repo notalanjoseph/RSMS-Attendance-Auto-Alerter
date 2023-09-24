@@ -11,8 +11,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 # ENTER YOUR CREDENTIALS
-uid = "U2103021"
-password = "210555"
+uid = ""
+password = ""
 
 if uid == "":
     uid = str(input("Enter Uid: "))
