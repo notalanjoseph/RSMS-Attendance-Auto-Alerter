@@ -1,6 +1,7 @@
 from selenium import webdriver
 
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 #from selenium.webdriver.support.ui import WebDriverWait
 #from selenium.webdriver.support import expected_conditions as EC
 import time
@@ -61,16 +62,18 @@ msg['To'] = to_address
 
 for day in days:
     try:
-        td_element = driver.find_element(By.XPATH, "//td[text()=day]")
+        td_element = driver.find_element(By.XPATH, "//table[2]/td[contains(text(), day)]")
         # iff no error, then the below code executes
         msg['Subject'] = "ABSENT on {}".format(day)
         body = 'Hi student,\nyou were marked absent on {}.\nContact your professor if this was a mistake.\n\nIf you recieved this email already, please ignore.'.format(day)
 
-    except:
+    except NoSuchElementException as e:
+#        print("\n\nERROR")
+#        print(e)
         msg['Subject'] = "PRESENT on {}".format(day)
         body = '\n\nYou were marked present on {} in RSMS\nOR\nyour professor did not update RSMS yet.'.format(day)
 
-    body = body + "\n\n\n\n\nThis is an automated email. Please contact in case of any errors."
+    body = body + "\n\n\n\n\nThis is an automated email. Please contact in case of any error."
     msg.attach(MIMEText(body, 'plain'))
     text = msg.as_string()
     smtp_object.sendmail(from_address, to_address, text)
