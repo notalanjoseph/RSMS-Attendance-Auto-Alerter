@@ -15,4 +15,4 @@ Github actions has been utilised to schedule the script to run every wed, thu an
 
 - Fork this repository.  
 - Edit the `chromium.py` to enter your credentials OR save your credentials as github secrets named `YOUR_UID` and `RSMS_PASSWORD`.  
-- Thats it! You can manually run the action `Schedule Python script` from the Actions tab to check if it's working.
+- Thats it! You can manually run the action `Schedule Python script` from the Actions tab to test if it's working. Otherwise, the action will run automatically as explained.
