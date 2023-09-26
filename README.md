@@ -11,7 +11,7 @@ If an absent has been marked in the attendance table for the specified dates, an
 Since monday's attendance will only be locked on wednesday, the script will have to run only on every wed, thu & fri.  
 Github actions has been utilised to schedule the script to run every wed, thu and fri at 6:30pm.
 
-## How to use this 👾
+## How to use this 💻
 
 - Fork this repository.  
 - Edit the `chromium.py` to enter your credentials OR save your credentials as github secrets named `YOUR_UID` and `RSMS_PASSWORD`.  
