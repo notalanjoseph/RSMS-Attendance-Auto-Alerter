@@ -1,4 +1,8 @@
 # RSMS-Attendance-Auto-Alerter
+
+![main workflow](https://img.shields.io/github/actions/workflow/status/notalanjoseph/RSMS-Attendance-Auto-Alerter/actions.yml?logo=github)
+![documentation](https://img.shields.io/readthedocs/gspread?logo=readthedocs)
+![python version](https://img.shields.io/pypi/pyversions/gspread?style=pypi)
  
 RSET students are asked to regularly check if they are wrongly marked absent in RSMS website.  
 RSMS attendance gets locked 3 days after each class, so if students fail to realise and report any discrepancies, they lose their attendance.  
@@ -14,5 +18,6 @@ Github actions has been utilised to schedule the script to run every wed, thu an
 ## How to use this 💻
 
 - Fork this repository.  
-- Edit the `chromium.py` to enter your credentials OR save your credentials as github secrets named `YOUR_UID` and `RSMS_PASSWORD`.  
-- Thats it! You can manually run the action `Schedule Python script` from the Actions tab to test if it's working. Otherwise, the action will run automatically as explained.
+- Edit the `chromium.py` to enter your credentials OR save your credentials as github secrets named `YOUR_UID` and `RSMS_PASSWORD`.
+- Enable the workflow `Schedule Python script` from the repository's action tab. You can manually run the workflow by clicking `Run workflow` button to test if it's working.
+- Thats it! The service will run automatically according to schedule as explained.
