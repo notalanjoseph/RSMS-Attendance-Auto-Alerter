@@ -1,9 +1,10 @@
 from selenium import webdriver
 
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
+#from selenium.common.exceptions import NoSuchElementException
 #from selenium.webdriver.support.ui import WebDriverWait
 #from selenium.webdriver.support import expected_conditions as EC
+import bs4
 import time
 import datetime
 import maskpass
@@ -42,6 +43,7 @@ time.sleep(2)
 submit_button = driver.find_element(By.CLASS_NAME, "ibox1")
 submit_button.click()
 time.sleep(2)
+soup = bs4.BeautifulSoup(driver.page_source, "lxml")
 
 # check for last 3 days date in the sheet
 today = datetime.date.today().strftime('%d-%b-%Y')
@@ -61,17 +63,15 @@ msg['From'] = from_address
 msg['To'] = to_address
 
 for day in days:
-    try:
-        td_element = driver.find_element(By.XPATH, "//table[2]/td[contains(text(), day)]")
-        # iff no error, then the below code executes
+    #td_element = driver.find_element(By.XPATH, "//table[2]/td[contains(text(), day)]")
+    tag = soup.find(text=day)
+    if tag != None:
         msg['Subject'] = "ABSENT on {}".format(day)
-        body = 'Hi student,\nyou were marked absent on {}.\nContact your professor if this was a mistake.\n\nIf you recieved this email already, please ignore.'.format(day)
+        body = 'Hi student,\nyou were marked absent on {}.\nContact your professor if you were marked absent by mistake.\n\nIf you recieved this email already, please ignore.'.format(day)
 
-    except NoSuchElementException as e:
-#        print("\n\nERROR")
-#        print(e)
-        msg['Subject'] = "PRESENT on {}".format(day)
-        body = '\n\nYou were marked present on {} in RSMS\nOR\nyour professor did not update RSMS yet.'.format(day)
+    else:
+        msg['Subject'] = "NOT Absent on {}".format(day)
+        body = '\n\nYou were not marked absent on {} in RSMS\nOR\nyour professor did not update RSMS yet OR it was a holiday.'.format(day)
 
     body = body + "\n\n\n\n\nThis is an automated email. Please contact in case of any error."
     msg.attach(MIMEText(body, 'plain'))
