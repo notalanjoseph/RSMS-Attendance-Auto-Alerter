@@ -31,7 +31,7 @@ jobs:
       - name: Install a new Chromium
         run: sudo apt install -y chromium-browser
       - name: Install all necessary packages
-        run: pip install webdriver_manager selenium    
+        run: pip install webdriver_manager selenium beautifulsoup4
 
       - name: Run the python script
         run: python chromium.py
