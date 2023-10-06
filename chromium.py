@@ -63,7 +63,7 @@ msg['From'] = from_address
 msg['To'] = to_address
 
 for day in days:
-    tag = soup.find(text=day)
+    tag = soup.find(string=day)
     if tag != None:
         msg['Subject'] = "ABSENT on {}".format(day)
         body = 'Hi student,\nyou were marked absent on {}.\nContact your professor if you were marked absent by mistake.\n\nIf you recieved this email already, please ignore.'.format(day)
