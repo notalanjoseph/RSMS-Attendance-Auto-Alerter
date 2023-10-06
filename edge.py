@@ -46,9 +46,12 @@ time.sleep(2)
 soup = bs4.BeautifulSoup(driver.page_source, "lxml")
 
 # check for last 3 days date in the sheet
-today = datetime.date.today().strftime('%d-%b-%Y')
-yesterday = (datetime.date.today() - datetime.timedelta(days=1)).strftime('%d-%b-%Y')
-ereyesterday = (datetime.date.today() - datetime.timedelta(days=2)).strftime('%d-%b-%Y')
+today = datetime.date.today().strftime('%e-%b-%Y')
+today = today.replace(' ', '')
+yesterday = (datetime.date.today() - datetime.timedelta(days=1)).strftime('%e-%b-%Y')
+yesterday = yesterday.replace(' ', '')
+ereyesterday = (datetime.date.today() - datetime.timedelta(days=2)).strftime('%e-%b-%Y')
+ereyesterday = ereyesterday.replace(' ', '')
 days = [ereyesterday, yesterday, today]
 
 # initialize smtp object

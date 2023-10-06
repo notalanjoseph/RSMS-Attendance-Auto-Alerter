@@ -47,9 +47,12 @@ submit_button.click()
 time.sleep(2)
 soup = bs4.BeautifulSoup(driver.page_source, "lxml")
 
-today = datetime.date.today().strftime('%d-%b-%Y')
-yesterday = (datetime.date.today() - datetime.timedelta(days=1)).strftime('%d-%b-%Y')
-ereyesterday = (datetime.date.today() - datetime.timedelta(days=2)).strftime('%d-%b-%Y')
+today = datetime.date.today().strftime('%e-%b-%Y')
+today = today.replace(' ', '')
+yesterday = (datetime.date.today() - datetime.timedelta(days=1)).strftime('%e-%b-%Y')
+yesterday = yesterday.replace(' ', '')
+ereyesterday = (datetime.date.today() - datetime.timedelta(days=2)).strftime('%e-%b-%Y')
+ereyesterday = ereyesterday.replace(' ', '')
 days = [ereyesterday, yesterday, today]
 
 smtp_object = smtplib.SMTP('smtp-relay.brevo.com', 587)
