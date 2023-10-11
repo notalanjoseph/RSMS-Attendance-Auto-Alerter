@@ -55,12 +55,12 @@ ereyesterday = (datetime.date.today() - datetime.timedelta(days=2)).strftime('%e
 ereyesterday = ereyesterday.replace(' ', '')
 days = [ereyesterday, yesterday, today]
 
-smtp_object = smtplib.SMTP('smtp-relay.brevo.com', 587)
+smtp_object = smtplib.SMTP('smtp.elasticemail.com', 2525)
 smtp_object.ehlo()  # this line should always come after the line above
 smtp_object.starttls()
 from_address = "notalan.notification@gmail.com"
 to_address = "u{}@rajagiri.edu.in".format(uid[1:])
-smtp_object.login(from_address, "Lyj8RhM6TxkO3HDB")
+smtp_object.login(from_address, "1075738EE6A62D415E157663391DEABC06B1")
 msg = MIMEMultipart()
 msg['From'] = from_address
 msg['To'] = to_address
