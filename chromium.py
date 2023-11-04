@@ -67,13 +67,14 @@ msg['To'] = to_address
 
 for day in days:
     tag = soup.find(string=day)
-    if tag != None:
-        msg['Subject'] = "ABSENT on {}".format(day)
-        body = 'Hi student,\nyou were marked absent on {}.\nContact your professor if you were marked absent by mistake.\n\nIf you recieved this email already, please ignore.'.format(day)
+    if tag == None:
+        #msg['Subject'] = "NOT Absent on {}".format(day)
+        #body = '\n\nYou were not marked absent on {} in RSMS\nOR\nyour professor did not update RSMS yet OR it was a holiday.'.format(day)
+        continue
 
     else:
-        msg['Subject'] = "NOT Absent on {}".format(day)
-        body = '\n\nYou were not marked absent on {} in RSMS\nOR\nyour professor did not update RSMS yet OR it was a holiday.'.format(day)
+        msg['Subject'] = "ABSENT on {}".format(day)
+        body = 'Good day student,\n\tyou were marked absent on {}.\nCheck your RSMS attendance page for more details.\nContact your professor if you were marked absent by mistake.\n\nIf you recieved this email already, please ignore.'.format(day)
 
     body = body + "\n\n\n\n\nThis is an automated email. Please contact in case of any error."
     msg.attach(MIMEText(body, 'plain'))
