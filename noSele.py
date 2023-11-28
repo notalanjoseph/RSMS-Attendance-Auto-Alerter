@@ -95,6 +95,7 @@ import maskpass
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import os
 
 # ENTER YOUR CREDENTIALS
 uid = os.getenv("YOUR_UID")
