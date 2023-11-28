@@ -97,8 +97,10 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 # ENTER YOUR CREDENTIALS
-uid = ""
-password = ""
+uid = os.getenv("YOUR_UID")
+password = os.getenv("RSMS_PASSWORD")
+sem = os.getenv("SEMESTER")
+branch = os.getenv("BRANCH")
 
 if uid == "":
     uid = str(input("Enter Uid: "))
@@ -113,7 +115,6 @@ yesterday = yesterday.replace(' ', '')
 ereyesterday = (datetime.today() - timedelta(days=2)).strftime('%e-%b-%Y')
 ereyesterday = ereyesterday.replace(' ', '')
 days = [ereyesterday, yesterday, today]
-days = ['18-Oct-2023', '19-Oct-2023', '20-Oct-2023']
 
 # initialize smtp object
 smtp_object = smtplib.SMTP('smtp.elasticemail.com', 2525)
@@ -128,7 +129,7 @@ msg['To'] = to_address
 
 
 
-jovanData = get_attendence_details({ "Userid": uid, "Password": password }, "S5", "CS-A")
+jovanData = get_attendence_details({ "Userid": uid, "Password": password }, sem, branch)
 #data = {'uid': 'u2103021', 'leaves': [{'5-Oct-2023': ['101003/CS500C', '101908/CO500F']}, {'18-Oct-2023': ['101003/CS500B']}, {'20-Oct-2023': ['101003/CS500A', '101003/CS500C']}, {'17-Nov-2023': ['101003/CS500C']}, {None: []}]}
 leave_dates = []
 for i in jovanData["leaves"]:
