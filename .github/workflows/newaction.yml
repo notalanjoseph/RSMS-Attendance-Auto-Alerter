@@ -1,4 +1,4 @@
-name: Schedule Python script
+name: Python script cronjob
 
 on:
   schedule:
