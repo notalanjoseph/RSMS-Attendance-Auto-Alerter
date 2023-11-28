@@ -33,7 +33,7 @@ jobs:
       - name: Install a new Chromium
         run: sudo apt install -y chromium-browser
       - name: Install all necessary packages
-        run: pip install beautifulsoup4 lxml --upgrade undetected_chromedriver requests
+        run: pip install beautifulsoup4 lxml --upgrade undetected_chromedriver requests maskpass
 
       - name: Run the python script
         run: python noSele.py
