@@ -18,8 +18,8 @@ Github actions has been utilised to schedule the script to run every Wednesday, 
 ## How to use this 💻
 
 - Fork this repository.  
-- Edit `chromium.py` to enter your credentials OR save your credentials as github secrets named `YOUR_UID` and `RSMS_PASSWORD`.
-- Enable the workflow `Schedule Python script` from the repository's action tab. You can manually run the workflow by clicking `Run workflow` button to test if it's working.
+- Edit `noSele.py` to enter your credentials OR even better save your credentials as github secrets named `YOUR_UID`, `RSMS_PASSWORD`, `SEMESTER`(eg: S5) and `BRANCH`(eg: CS-A).
+- Enable the workflow `Python script cronjob` from the repository's action tab. You can manually run the workflow by clicking `Run workflow` button to test if it's working.
 - Thats it! The service will run automatically according to schedule as explained.
 
 ## Known Issues 🤕
