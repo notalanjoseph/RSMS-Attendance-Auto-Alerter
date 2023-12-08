@@ -138,20 +138,30 @@ for i in jovanData["leaves"]:
 #print(leave_dates)
 
 
-
+flag = 0
 for day in days:
     if day not in leave_dates:
         continue
     else:
+        flag = 1
         msg['Subject'] = "ABSENT on {}".format(day)
-        body = 'Good day student,\n\tyou were marked absent on {}.\nCheck your RSMS attendance page for more details.\nContact your professor if you were marked absent by mistake.\n\nIf you recieved this email already, please ignore.'.format(day)
+        body = 'Good day student,\n\tyou were marked absent on {}.\n\nCheck your RSMS attendance page for more details.\nContact your professor if you were marked absent by mistake.\n\nIf you recieved this email already, please ignore.'.format(day)
 
-    body = body + "\n\n\n\n\nThis is an automated email. Please contact in case of any error."
+    body = body + "\n\n\n\n\n\n\nThis is an automated email. Please contact in case of any error."
     msg.attach(MIMEText(body, 'plain'))
     text = msg.as_string()
     smtp_object.sendmail(from_address, to_address, text)
     time.sleep(1)
     del msg['Subject']
     del msg.get_payload()[0]
+
+if(flag == 0):
+    msg['Subject'] = "NOT absent on last 3 days!"
+    body = 'Good day student,\n\tyou were not marked absent for any classes today, yesterday, and the day before yesterday.\nIt was either a holiday or You attended all the classes!\n\nCheck your RSMS attendance page for more details.'
+    body = body + "\n\n\n\n\n\n\nThis is an automated email. Please contact in case of any error."
+    msg.attach(MIMEText(body, 'plain'))
+    text = msg.as_string()
+    smtp_object.sendmail(from_address, to_address, text)
+
 
 smtp_object.quit()
