@@ -1,4 +1,4 @@
-name: Python script cronjob
+name: Notifier cronjob
 
 on:
   schedule:
@@ -10,6 +10,8 @@ env:
   RSMS_PASSWORD: ${{secrets.RSMS_PASSWORD}}
   SEMESTER: ${{secrets.SEMESTER}}
   BRANCH: ${{secrets.BRANCH}}
+  GMAIL_ID: ${{secrets.GMAIL_ID}}
+  GMAIL_API: ${{secrets.GMAIL_API}}
 
 jobs:
   build:
@@ -24,16 +26,8 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Installed package list
-        run: apt list --installed
-      - name: Remove Chrome
-        run: sudo apt purge google-chrome-stable
-      - name: Remove default Chromium
-        run: sudo apt purge chromium-browser
-      - name: Install a new Chromium
-        run: sudo apt install -y chromium-browser
       - name: Install all necessary packages
-        run: pip install beautifulsoup4 lxml --upgrade undetected_chromedriver requests maskpass
+        run: pip install beautifulsoup4 lxml requests maskpass
 
       - name: Run the python script
         run: python noSele.py

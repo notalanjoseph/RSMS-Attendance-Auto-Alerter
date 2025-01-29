@@ -10,19 +10,26 @@ This project alerts you if you have been marked absent, hence saving your precio
 
 ## How it works 🧠
 
-The python script uses selenium to automate RSMS student's login using credentials provided.  
+The python script does webscraping by automating RSMS student's login using credentials provided.  
 If an absent has been marked in the attendance table for the specified dates, an email will be sent automatically to the student's college email address to notify them of this.  
 Since Monday's attendance will only be locked on Wednesday, the script will have to run only on every Wednesday, Thursday & Friday.  
 Github actions has been utilised to schedule the script to run every Wednesday, Thursday and Friday at 6:30pm.
 
 ## How to use this 💻
 
-- Fork this repository.  
-- Edit `noSele.py` to enter your credentials OR even better save your credentials as github secrets named `YOUR_UID`, `RSMS_PASSWORD`, `SEMESTER`(eg: S5) and `BRANCH`(eg: CS-A).
-- Enable the workflow `Python script cronjob` from the repository's action tab. You can manually run the workflow by clicking `Run workflow` button to test if it's working.
+- Fork this repository. Then on the repository page, click on `Settings` -> `Security` -> `Secrets and variables` -> `Actions`.
+- Save your credentials as Repository secrets named:
+    - `YOUR_UID`
+    - `RSMS_PASSWORD`
+    - `SEMESTER`(eg: S5)
+    - `BRANCH`(eg: CS-A)
+    - `GMAIL_ID`
+    - `GMAIL_API`.
+- The `GMAIL_ID` you provide will be used to send the email automatically. You will have to configure your Gmail SMTP server settings and obtain a `GMAIL_API` by referring this [article](https://mailtrap.io/blog/gmail-smtp/#How-to-configure-Gmail-SMTP-server-settings).
+- Enable the workflow `Notifier cronjob` from the repository's Actions tab. You can manually run the workflow by clicking `Run workflow` button to test if you are getting an email.
 - Thats it! The service will run automatically according to schedule as explained.
 
 ## Known Issues 🤕
 
+- Gmail api may expire or SMTP regulations may change.
 - Like all web scraping projects, any design updates to the target webpage may break the automation script. Luckily, RSMS website is not frequently updated.
-- During some runs, the virtual machine provided by Github Actions seems to install incompatible versions of chromium and it's webdriver. This happens for a few days after a new version of chromium is released. During these days, the code won't work. After a few days, the updated chromium gets installed, solving the issue. Read more about the problem [here](https://stackoverflow.com/questions/50692358/how-to-work-with-a-specific-version-of-chromedriver-while-chrome-browser-gets-up)
